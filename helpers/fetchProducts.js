@@ -1,5 +1,5 @@
 const fetchProducts = () => {
-  // seu código aqui
+  // iniciando o projeto
 };
 
 if (typeof module !== 'undefined') {
