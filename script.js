@@ -45,7 +45,7 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
   section.appendChild(createCustomElement('span', 'item__title', title));
   section.appendChild(createProductImageElement(thumbnail));
   section.appendChild(
-    createCustomElement('button', 'item__add', 'Adicionar ao carrinho!')
+    createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'),
   );
 
   return section;
@@ -55,9 +55,8 @@ const productList = async () => {
   const products = document.querySelector('.items');
   const array = await fetchProducts('computador');
   array.results.forEach((element) =>
-    products.appendChild(createProductItemElement(element))
-  );
-  //console.log(array);
+    products.appendChild(createProductItemElement(element)));
+  // console.log(array);
 };
 
 /**
