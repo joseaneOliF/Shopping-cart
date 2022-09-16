@@ -2,7 +2,7 @@
 // experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições!
 
 // Fique a vontade para modificar o código já escrito e criar suas próprias funções!
-
+const cartContainer = document.querySelector('.cart__items');
 /**
  * Função responsável por criar e retornar o elemento de imagem do produto.
  * @param {string} imageSource - URL da imagem.
@@ -87,7 +87,6 @@ const createCartItemElement = ({ id, title, price }) => {
   return li;
 };
 const createItem = async () => {
-  const cart = document.querySelector('.cart__items');
   const buttons = document.querySelectorAll('.item__add');
   // console.log(buttons);
   buttons.forEach((button) => {
@@ -96,7 +95,7 @@ const createItem = async () => {
       const itemId = event.target.parentNode.firstChild;
       const data = await fetchItem(itemId.innerText);
       // console.log(data);
-      cart.appendChild(createCartItemElement(data));
+      cartContainer.appendChild(createCartItemElement(data));
     });
   });
 }; 
