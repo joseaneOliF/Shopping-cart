@@ -87,15 +87,15 @@ const createCartItemElement = ({ id, title, price }) => {
   return li;
 };
 const createItem = async () => {
-  const buttons = document.querySelectorAll('.item__add');
+  const buttons = document.querySelectorAll('.item__add');// recupera o botão
   // console.log(buttons);
-  buttons.forEach((button) => {
+  buttons.forEach((button) => { // para cada botão adiciona um evento de clique
     // console.log('button');
     button.addEventListener('click', async (event) => {
-      const itemId = event.target.parentNode.firstChild;
-      const data = await fetchItem(itemId.innerText);
+      const itemId = event.target.parentNode.firstChild; // identifica o alvo que é o endpoint da API
+      const data = await fetchItem(itemId.innerText); // conecta o endpoint com a API e insere o texto na página
       // console.log(data);
-      cartContainer.appendChild(createCartItemElement(data));
+      cartContainer.appendChild(createCartItemElement(data));// coloca o evento como filho da <ol> e chama a função que cria os filhos (<li>) e passa como argumento a variável que contém o endpoint.
     });
   });
 }; 
