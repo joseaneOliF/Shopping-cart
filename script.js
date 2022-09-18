@@ -86,6 +86,27 @@ const createCartItemElement = ({ id, title, price }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
+// 
+// const getLocalStorage = () => JSON.parse(localStorage.getItem('cartItems'));
+// 
+// const adicionaLocalStorage = (objeto) => {
+//   let getLocal = getLocalStorage();
+//   if (!getLocal) {
+//     getLocal = [];
+//   }
+//   getLocal.push(objeto);
+//   localStorage.setItem('cartItems', JSON.stringify(getLocal));
+// };
+// 
+// const savedLocalStorage = getLocalStorage();
+//     savedLocalStorage.forEach((e) => {
+//     const li = document.createElement('li');
+//     li.addEventListener('click', cartItemClickListener);
+//     li.className = 'cart__item';
+//     li.innerText = e;
+//     cartContainer.appendChild(li);
+//   });
+// 
 const createItem = async () => {
   const buttons = document.querySelectorAll('.item__add');// recupera o botão
   // console.log(buttons);
@@ -96,9 +117,19 @@ const createItem = async () => {
       const data = await fetchItem(itemId.innerText); // conecta o endpoint com a API e insere o texto na página
       // console.log(data);
       cartContainer.appendChild(createCartItemElement(data));// coloca o evento como filho da <ol> e chama a função que cria os filhos (<li>) e passa como argumento a variável que contém o endpoint.
+      saveCartItems(cartContainer.innerHTML);
+      // console.log(createCartItemElement(data).innerHTML);
     });
   });
-}; 
+};
+
+const emptyCart = () => {
+  emptyBtn = document.querySelector('.empty-cart');
+  emptyBtn.addEventListener('click', () => {
+    cartContainer.innerText = '';
+  });
+};
+emptyCart();
 
 window.onload = async () => {
   await productList();
