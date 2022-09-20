@@ -1,6 +1,10 @@
 // Esse tipo de comentário que estão antes de todas as funções são chamados de JSdoc,
 // experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições!
 
+// const getSavedCartItems = require('./helpers/getSavedCartItems');
+
+// const saveCartItems = require('./helpers/saveCartItems');
+
 // Fique a vontade para modificar o código já escrito e criar suas próprias funções!
 const cartContainer = document.querySelector('.cart__items');
 /**
@@ -78,6 +82,7 @@ const productList = async () => {
  */
 const cartItemClickListener = (event) => {
   event.target.remove();
+  saveCartItems(cartContainer.innerHTML);
 };
 const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
@@ -86,27 +91,7 @@ const createCartItemElement = ({ id, title, price }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
-// 
-// const getLocalStorage = () => JSON.parse(localStorage.getItem('cartItems'));
-// 
-// const adicionaLocalStorage = (objeto) => {
-//   let getLocal = getLocalStorage();
-//   if (!getLocal) {
-//     getLocal = [];
-//   }
-//   getLocal.push(objeto);
-//   localStorage.setItem('cartItems', JSON.stringify(getLocal));
-// };
-// 
-// const savedLocalStorage = getLocalStorage();
-//     savedLocalStorage.forEach((e) => {
-//     const li = document.createElement('li');
-//     li.addEventListener('click', cartItemClickListener);
-//     li.className = 'cart__item';
-//     li.innerText = e;
-//     cartContainer.appendChild(li);
-//   });
-// 
+ 
 const createItem = async () => {
   const buttons = document.querySelectorAll('.item__add');// recupera o botão
   // console.log(buttons);
@@ -117,11 +102,16 @@ const createItem = async () => {
       const data = await fetchItem(itemId.innerText); // conecta o endpoint com a API e insere o texto na página
       // console.log(data);
       cartContainer.appendChild(createCartItemElement(data));// coloca o evento como filho da <ol> e chama a função que cria os filhos (<li>) e passa como argumento a variável que contém o endpoint.
-      saveCartItems(cartContainer.innerHTML);
       // console.log(createCartItemElement(data).innerHTML);
+      saveCartItems(cartContainer.innerHTML);// adiciona as ol's dentro do lacalSotrage
     });
   });
 };
+
+// const cartItems = document.querySelectorAll('.cart__item');
+//   cartItems.forEach((item) => {
+//     item.addEventListener('click', cartItemClickListener);
+//   });
 
 const emptyCart = () => {
   emptyBtn = document.querySelector('.empty-cart');
@@ -131,7 +121,21 @@ const emptyCart = () => {
 };
 emptyCart();
 
+const removeLoadingMessage = () => {
+  const removeLoading = document.querySelector('.loading');
+  removeLoading.remove();
+};
+
 window.onload = async () => {
   await productList();
   await createItem();
+  removeLoadingMessage();
+  cartContainer.innerHTML = getSavedCartItems();// salva as ol's dentro do localStorage
+  // localStorage resolvido com a ajuda do Sérgio Francisco - Summer
+  // preciso fazer um querySelectorAll para pegar todas as li's
+  // criando um laço de repetição eu irei reatribuir os eventos ( o mesmo evento de remoção do carrinho)
+  const cartItems = document.querySelectorAll('.cart__item'); // recupera as li's para serem removidas do carrinho.
+  cartItems.forEach((item) => { // percorre todas as li's
+    item.addEventListener('click', cartItemClickListener); // adiciona o evento em cada li. Tudo dentro do onload para ser feito quando a página é carregada.
+  });// Feito com a orientação do Josiel Costa
 };
