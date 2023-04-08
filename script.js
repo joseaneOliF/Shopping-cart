@@ -80,7 +80,7 @@ const productList = async () => {
  * @param {string} product.price - Preço do produto.
  * @returns {Element} Elemento de um item do carrinho.
  */
-const cartItemClickListener = (event) => {
+const cartItemClickListener = (event) => { // função que remove os itens do carrinho
   event.target.remove();
   saveCartItems(cartContainer.innerHTML);
 };
@@ -134,7 +134,7 @@ window.onload = async () => {
   // localStorage resolvido com a ajuda do Sérgio Francisco - Summer
   // preciso fazer um querySelectorAll para pegar todas as li's
   // criando um laço de repetição eu irei reatribuir os eventos ( o mesmo evento de remoção do carrinho)
-  const cartItems = document.querySelectorAll('.cart__item'); // recupera as li's para serem removidas do carrinho.
+  const cartItems = document.querySelectorAll('.cart__item'); // recupera as li's para serem removidas do localStorage.
   cartItems.forEach((item) => { // percorre todas as li's
     item.addEventListener('click', cartItemClickListener); // adiciona o evento em cada li. Tudo dentro do onload para ser feito quando a página é carregada.
   });// Feito com a orientação do Josiel Costa
